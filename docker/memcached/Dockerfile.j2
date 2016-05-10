@@ -1,0 +1,18 @@
+FROM {{ namespace }}/openstack-base:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+ENV DEBIAN_FRONTEND "noninteractive"
+
+RUN apt-get update \
+    && apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" memcached \
+    && rm -rf /var/lib/apt/lists/*
+
+#USER memcache
+
+ADD run.sh /run.sh
+RUN chmod +x /run.sh
+
+ENTRYPOINT ["/run.sh"]
+CMD [""]
+
+EXPOSE 11211
