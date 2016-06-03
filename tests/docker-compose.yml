@@ -1,0 +1,4 @@
+memcached:
+    image: mcp/memcached
+    ports:
+      - 11219:11211

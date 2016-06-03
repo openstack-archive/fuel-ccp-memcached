@@ -1,18 +1,18 @@
-FROM {{ namespace }}/openstack-base:{{ tag }}
+FROM {{ namespace }}/base-tools:{{ tag }}
 MAINTAINER {{ maintainer }}
 
 ENV DEBIAN_FRONTEND "noninteractive"
 
 RUN apt-get update \
     && apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" memcached \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-#USER memcache
+RUN useradd --user-group memcached \
+    && usermod -a -G microservices memcached
 
-ADD run.sh /run.sh
-RUN chmod +x /run.sh
-
-ENTRYPOINT ["/run.sh"]
-CMD [""]
-
+USER memcached
 EXPOSE 11211
+
+# ChancheMe to template in future
+CMD ["memcached", "-v", "-u", "memcached",  "-l", "0.0.0.0", "-m", "256"]
