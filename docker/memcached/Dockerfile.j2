@@ -1,8 +1,6 @@
 FROM {{ namespace }}/base-tools:{{ tag }}
 MAINTAINER {{ maintainer }}
 
-ENV DEBIAN_FRONTEND "noninteractive"
-
 RUN apt-get update \
     && apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" memcached \
     && rm -rf /var/lib/apt/lists/* \
@@ -10,9 +8,3 @@ RUN apt-get update \
 
 RUN useradd --user-group memcached \
     && usermod -a -G microservices memcached
-
-USER memcached
-EXPOSE 11211
-
-# ChancheMe to template in future
-CMD ["memcached", "-v", "-u", "memcached",  "-l", "0.0.0.0", "-m", "256"]

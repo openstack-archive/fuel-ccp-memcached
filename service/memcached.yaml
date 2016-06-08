@@ -1,0 +1,10 @@
+service:
+    name: memcached
+    ports:
+        - memcached_port
+    probes:
+        readiness: "true"
+        liveness: "true"
+    daemon:
+        command: memcached -v -u memcached -l {{ memcached_addr }} -m {{ memcached_ram }}
+        user: memcached

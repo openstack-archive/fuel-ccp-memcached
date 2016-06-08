@@ -1,0 +1,4 @@
+configs:
+    memcached_addr: 0.0.0.0
+    memcached_port: 11211
+    memcached_ram: 256
