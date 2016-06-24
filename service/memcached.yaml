@@ -1,13 +1,15 @@
 service:
-    name: memcached
-    ports:
-        - memcached_port
-    container:
-        node-selector:
-            openstack-controller: "true"
-    probes:
+  name: memcached
+  ports:
+    - memcached_port
+  node-selector:
+    openstack-controller: "true"
+  containers:
+    - name: memcached
+      image: memcached
+      probes:
         readiness: "true"
         liveness: "true"
-    daemon:
+      daemon:
         command: memcached -v -u memcached -l {{ memcached_addr }} -m {{ memcached_ram }}
         user: memcached
