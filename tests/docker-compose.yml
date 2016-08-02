@@ -1,5 +1,0 @@
-memcached:
-    image: memcachedbuild/memcached:latest
-    ports:
-      - 11219:11211
-    command: "memcached -v -u memcached -l 127.0.0.1"
