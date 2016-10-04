@@ -1,7 +1,7 @@
 service:
   name: memcached
   ports:
-    - {{ memcached_port }}
+    - {{ memcached.port }}
   containers:
     - name: memcached
       image: memcached
@@ -9,5 +9,5 @@ service:
         readiness: "true"
         liveness: "true"
       daemon:
-        command: memcached -v -u memcached -l {{ memcached_addr }} -m {{ memcached_ram }}
+        command: memcached -v -u memcached -l {{ memcached.address }} -m {{ memcached.ram }}
         user: memcached
