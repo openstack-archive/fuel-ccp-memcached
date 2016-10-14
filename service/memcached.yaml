@@ -1,7 +1,7 @@
 service:
   name: memcached
   ports:
-    - {{ memcached.port }}
+    - cont: {{ memcached.port }}
   containers:
     - name: memcached
       image: memcached
