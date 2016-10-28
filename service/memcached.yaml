@@ -1,5 +1,6 @@
 service:
   name: memcached
+  kind: PetSet
   ports:
     - {{ memcached.port }}
   containers:
