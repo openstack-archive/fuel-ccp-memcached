@@ -6,11 +6,6 @@ service:
   containers:
     - name: memcached
       image: memcached
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         command: memcached -v -u memcached -l {{ memcached.address }} -m {{ memcached.ram }}
         user: memcached
