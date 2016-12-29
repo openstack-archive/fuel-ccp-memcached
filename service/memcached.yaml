@@ -7,5 +7,5 @@ service:
     - name: memcached
       image: memcached
       daemon:
-        command: memcached -v -u memcached -l {{ memcached.address }} -m {{ memcached.ram }}
+        command: memcached -v -u memcached -l {{ memcached.address }} -m {{ memcached.ram }} -c {{ memcached.max_connections }}
         user: memcached
