@@ -1,11 +1,33 @@
-dsl_version: 0.1.0
+dsl_version: 0.4.0
 service:
   name: memcached
   ports:
     - {{ memcached.port }}
+  # {% if telegraf is defined %}
+  annotations:
+    service:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "{{ telegraf.prometheus_output_port.cont }}"
+  # {% endif %}
   containers:
     - name: memcached
       image: memcached
       daemon:
         command: memcached -v -u memcached -l {{ memcached.address }} -m {{ memcached.ram }} -c {{ memcached.max_connections }}
         user: memcached
+    # {% if telegraf is defined %}
+    - name: memcached-telegraf
+      image: telegraf
+      daemon:
+        dependencies:
+          - etcd
+          - memcached
+        command: telegraf --config /etc/telegraf/telegraf.conf --input-filter memcached
+        files:
+          - telegraf-conf
+    # {% endif %}
+
+files:
+  telegraf-conf:
+    path: /etc/telegraf/telegraf.conf
+    content: telegraf.conf.j2
