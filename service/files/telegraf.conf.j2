@@ -1,0 +1,14 @@
+[agent]
+  interval = "15s"
+  round_interval = false
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "2s"
+  hostname = ""
+  omit_hostname = false
+
+[[outputs.prometheus_client]]
+  listen = ":{{ telegraf.prometheus_output_port.cont }}"
+
+[[inputs.memcached]]
+  servers = ["{{ network_topology["private"]["address"] }}:{{ memcached.port.cont }}"]
