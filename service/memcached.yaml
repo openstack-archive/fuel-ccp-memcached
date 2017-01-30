@@ -19,9 +19,6 @@ service:
     - name: memcached-telegraf
       image: telegraf
       daemon:
-        dependencies:
-          - etcd
-          - memcached
         command: telegraf --config /etc/telegraf/telegraf.conf --input-filter memcached
         files:
           - telegraf-conf
