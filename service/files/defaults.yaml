@@ -1,7 +1,0 @@
-configs:
-  memcached:
-    address: 0.0.0.0
-    port:
-      cont: 11211
-    ram: 1024
-    max_connections: 16384
